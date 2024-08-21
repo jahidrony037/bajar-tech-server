@@ -60,6 +60,15 @@ async function run() {
     })
 
 
+    //sort by price 
+    app.get('/products/sort', async(req,res)=>{
+      const {order} = req.query;
+      const sortCriteria = { price: order === 'desc' ? -1 : 1 };
+      const products = await productsCollection.find({}).sort(sortCriteria).toArray();
+      res.json(products);
+    })
+
+
 
 
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
