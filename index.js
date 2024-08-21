@@ -6,7 +6,7 @@ const cors = require('cors');
 
 const port = process.env.PORT || 5000;
 
-app.use(cors(['https://bajar-tech.web.app/','https://bajar-tech.firebaseapp.com/']));
+app.use(cors(['https://bajar-tech.web.app/','https://bajar-tech.firebaseapp.com/','http://localhost:5173/']));
 app.use(express.json());
 
 
@@ -35,8 +35,20 @@ async function run() {
     //all products api 
 
     app.get('/allProducts', async(req,res)=>{
-      const products = await productsCollection.find({}).toArray();
-      res.json(products);
+      
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const totalProducts = await productsCollection.countDocuments();
+   
+      const products = await productsCollection.find({}).skip((page-1)*limit).limit(limit).toArray();
+      // console.log(products);
+      res.json({
+        products,
+        currentPage:page,
+        totalPage:Math.ceil(await productsCollection.countDocuments()/limit), 
+        totalProducts
+      })
+      
     })
 
 
