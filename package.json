@@ -2,16 +2,13 @@
   "name": "bajar-tech-server",
   "version": "1.0.0",
   "main": "index.js",
-  "author": "jahid",
+  "repository": "git@github.com:jahidrony037/bajar-tech-server.git",
+  "author": "Jahid Hasan Rony <jahidrony162@gmail.com>",
   "license": "MIT",
-  "scripts": {
-    "start": "node index.js"
-  },
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
-    "jwt": "^0.2.0",
     "mongodb": "^6.8.0",
     "node": "^22.6.0",
     "nodemon": "^3.1.4"

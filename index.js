@@ -30,7 +30,14 @@ async function run() {
     // Send a ping to confirm a successful connection
     // await client.db("admin").command({ ping: 1 });
 
+    const productsCollection= client.db("bajar-tech").collection("products");
 
+    //all products api 
+
+    app.get('/allProducts', async(req,res)=>{
+      const products = await productsCollection.find({}).toArray();
+      res.json(products);
+    })
 
 
 
