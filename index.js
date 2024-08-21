@@ -51,6 +51,14 @@ async function run() {
       
     })
 
+    //search by name api
+    app.get('/products/search', async(req,res)=>{
+      const {name}=req.query;
+      // console.log(name);
+      const products = await productsCollection.find({name:{$regex:name, $options:'i'}}).toArray();
+      res.json(products);
+    })
+
 
 
 
