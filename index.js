@@ -69,6 +69,32 @@ async function run() {
     })
 
 
+    //filter products api
+    app.get('/filters/products', async (req,res)=>{
+      try{
+        const {brand,category} =req.query;
+        const minPrice = parseFloat(req.query.minPrice) || 100;
+    const maxPrice = parseFloat(req.query.maxPrice) || 50000;
+        let query = {};
+        if(brand) query.brand=brand;
+        if (category) query.category = category;
+    if (minPrice && maxPrice) {
+      query.price = { $gte: parseFloat(minPrice), $lte: parseFloat(maxPrice) };
+    } else if (minPrice) {
+      query.price = { $gte: parseFloat(minPrice) };
+    } else if (maxPrice) {
+      query.price = { $lte: parseFloat(maxPrice) };
+    }
+
+    const products = await productsCollection.find(query).toArray();
+    // console.log(products);
+    res.json(products);
+      }catch(error){
+        res.status(500).json({message:error.message});
+      }
+    })
+
+
 
 
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
