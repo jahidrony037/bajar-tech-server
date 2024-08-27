@@ -68,6 +68,14 @@ async function run() {
       res.json(products);
     })
 
+    //sort by date 
+    app.get('/products/dateSort', async(req,res)=>{
+      const {order}=req.query;
+      // console.log(order);
+      const products = await productsCollection.find({}).sort({createDate:order}).toArray();
+      res.json(products);
+    })
+
 
     //filter products api
     app.get('/filters/products', async (req,res)=>{
