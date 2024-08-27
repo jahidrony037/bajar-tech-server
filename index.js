@@ -102,6 +102,14 @@ async function run() {
       }
     })
 
+    //
+    app.get('/products/random', async(req,res)=>{
+      const products = await productsCollection.aggregate([
+        {$sample:{size:9}}
+      ]).toArray();
+      res.json(products);
+    })
+
 
 
 
